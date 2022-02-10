@@ -1,1 +1,1 @@
-# ECurso estadística 3
+# Curso estadística 3
