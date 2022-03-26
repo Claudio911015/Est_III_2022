@@ -1,0 +1,118 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage[width=18.00cm, height=27.00cm]{geometry}
+\title{Clase Estadística III}
+\begin{document}
+	\maketitle
+	\section{Repaso procesos $AR(1)$ y $MA(1)$}
+	
+	Las clases anteriores nos hemos centrado en el estudio de los modelos más sencillos en series de tiempo para procesos estacionarios, sin embargo, son fudamentales para entender el comportamiento de los modelos de series de tiempo. Dichos procesos son los sguientes:
+	\begin{itemize}
+		\item Proceso Autorregresivo de orden 1 ($AR(1)$):
+		\begin{eqnarray}
+			X_t &=& \phi X_{t-1} + Z_t , \ Z_t \sim WN(0, \sigma^2) \\
+			\rho (h) &=& \phi ^h
+		\end{eqnarray}
+		\item Proceso de medias móviles de orden 1 ($MA(1)$):
+		\begin{eqnarray}
+			X_t &=& \psi Z_{t-1} + Z_t , \ Z_t \sim WN(0, \sigma^2) \\
+			\rho (h) &=& \frac{-\psi}{1+\psi^2}, \ h = 1; \ \ \rho (h) = 0 , \ h \neq 0
+		\end{eqnarray}
+	\end{itemize}
+Otra de las cosas que exploramos durante la primera parte del curso fue la función de autocorrelación parcial, la cual mide la covarianza entre dos variables aleatorias quitando los efectos de variables aleatorias "intermedias", dicha medida puede calcularse de la siguiente forma:
+\begin{eqnarray}
+	\phi_{1,1} &=& \rho_{1} \\
+	\phi_{k+1,k+1} &=& \frac{\rho_{k+1}- \sum_{j=1}^{k}\phi_{k,j}\rho_{k+1-j}}{1-\sum_{j=1}^{k}\phi_{k,j}\rho_{j}}\\
+	\phi_{k+1,j} &=& \phi_{k,j} - \phi_{k+1,k+1} \phi_{k+1,k+1-j}
+\end{eqnarray}
+
+A partir de  este algoritmo recursivo, es posible calcular la función de autocorrelación parcial para cualquier lag "k".
+
+Ejercicio: Implementar una función que calcule la función de autocorrelación parcial para algún orden "k".
+\section{Operadores utilizados en Series de Tiempo}
+Para la siguiente parte del curso, simplificaremos la notación para los modelos de series de tiempo definiendo los siguientes operadores:
+\begin{itemize}
+	\item Operador "Retraso" $B$ definido de la siguiente forma:
+	\begin{equation}
+		B X_t = X_{t-1}
+	\end{equation}
+	\item operador "Diferencia" $\nabla$ definido como:
+		\begin{equation}
+			\nabla X_t = X_t - X_{t-1}
+		\end{equation} 
+\end{itemize}
+
+Utilizando dichos operadores, podemos definir al proceso $AR(1)$ y al proceso $MA(1)$ de la siguiente forma:
+\begin{eqnarray}
+	(1-\phi B)X_t &=& Z_t , \ AR(1)\\
+	X_t &=& (1+\psi B) Z_t, \ MA(1)
+\end{eqnarray}
+Además, podemos componer dichos operadores para representar procesos de la siguiente forma:
+\begin{eqnarray}
+	X_{t-2} &=& B X_{t-1} = B(B X_{t}) = B ^{2}X_t \\
+	\nabla ^{2} X_t = \nabla (\nabla X_t) &=& \nabla (X_t - X_{t-1}) = \nabla X_t - \nabla X_{t-1} = X_t - 2 X_{t-1}+ X_{t-2}
+\end{eqnarray}
+De lo anterior, supondremos en este curso que los operadores $B$ y $\nabla$ tienen propiedades algebráicas (podemos definir una propiedad aditiva, conmutativa y distributiva), lo cual es cierto, pero no lo demostraremos en este curso por limitaciones de tiempo. 
+Por ahora, nos centraremos en el análisis del proceso $AR(1)$, cuando discutimos procesos estacionarios, sabemos que, asumiendo $|\phi| < 1$, el proceso $AR(1)$ es estacionario y además que el proceso $AR(1)$ es una combinación infinita de "ruidos blancos" pasados, es decir:
+\begin{equation}
+	X_t = \sum_{j = 0}^{\infty} \phi^j Z_{t-j}
+\end{equation} 
+ Resulta que podemos determinar si un proceso es estacionario a partir de su "polinomio característico", el cual, para un proceso $AR(1)$ es \begin{equation}
+ 	\phi_1(B) = 1- \phi B,
+ \end{equation}
+Un proceso es estacionario si las raíces del polinomio característico aspociado a un proceso $\phi_p(B) =0$ caen fuera del círculo unitario.
+
+\subsection{Ejemplo}
+
+Consideremos el proceso $AR(2)$, el cual se define de la siguiente forma:
+
+\begin{equation}
+	X_t=\phi_1 X_{t-1}+\phi_2 X_{t-2}+ Z_t,
+\end{equation}
+o bien,
+\begin{equation}
+	(1-\phi_1 B -\phi_1 B^{2})X_t = Z_t
+\end{equation}
+
+En este caso, el polinomio característico está dado por:
+\begin{equation}
+	\phi_2(B) = 1-\phi_1 B -\phi_1 B^{2} = 
+\end{equation}
+Resolviendo la ecuación de segundo grado, obtenemos lo siguiente:
+\begin{equation}
+	B_1 = \frac{- \phi_{1}+ \sqrt{\phi_{1}^2+4\phi_{2}}}{2\phi_{2}}
+\end{equation}
+ y
+ \begin{equation}
+ 	B_2 = \frac{- \phi_{1}- \sqrt{\phi_{1}^2+4\phi_{2}}}{2\phi_{2}}
+ \end{equation}
+Calculando el recíproco para $B_1$ y $B_2$:
+ \begin{equation}
+	\frac{1}{B_1} = \frac{\phi_{1}+ \sqrt{\phi_{1}^2+4\phi_{2}}}{2}
+\end{equation}
+ \begin{equation}
+	\frac{1}{B_2} = \frac{\phi_{1}- \sqrt{\phi_{1}^2+4\phi_{2}}}{2}
+\end{equation}
+
+La condición necesaria para que el proceso $AR(2)$ sea estacionario implica que $|B_i| > 1$, lo cual implica que $|1/B_i| < 1$, por lo que:
+\begin{equation}
+	\left |  \frac{1}{B_1}\frac{1}{B_2} \right | = |\phi_2|<1 
+\end{equation}
+y
+\begin{equation}
+	|\phi_1| = \left |  \frac{1}{B_1}+\frac{1}{B_2} \right | < 2
+\end{equation}
+
+Entonces, las condiciones necesrias para que un proceso $AR(2)$ sea estacionario son las siguientes:
+\begin{equation}
+	\begin{cases}
+		& -1 < \phi_2 < 1\\
+		&-2 < \phi_2 < 2
+	\end{cases}
+\end{equation}
+\end{document}

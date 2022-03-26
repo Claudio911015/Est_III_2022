@@ -1,0 +1,12 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage[width=18.00cm, height=27.00cm]{geometry}
+\usepackage[spanish]{babel}
+\begin{document}
+	
+\end{document}
