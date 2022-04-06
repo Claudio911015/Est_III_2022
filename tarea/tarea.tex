@@ -1,0 +1,36 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage[width=18.00cm, height=27.00cm]{geometry}
+\title{Tarea Estadística III}
+\begin{document}
+\maketitle	
+
+\begin{enumerate}
+\item El método más utilizado para estimar los parámetros de una serie de tiempo es llamado "Método de Máxima Verosimilitud", el cual consiste en 
+        maximizar la función de log-verosimilitud correspondiente a una muestra aleatoria. Como ejemplo, 
+        tomemos un proceso AR(1). Asumiendo una distribución Gaussiana para el ruido blanco:
+        \begin{equation}
+            X_t \vert X_{t-1} \sim \mathcal{N}\left(\phi X_{t-1}, \sigma^2\right)
+        \end{equation}
+        Encuentre los estimadores de $\phi$ y $\sigma$ ($\hat{\phi}$ y $\hat{\sigma}$ respectivamente) utilizando el método de máxima verosimilitud.
+\item Uno de los indicadores más utilizados para determinar si el modelo utilizado en una serie de tiempo es el criterio de información de Akaike (Akaike Information Criterion). Investigue en qué consiste dicho indicador y de una breve explicación al respecto.
+\item En clase vimos que un método muy utilizado para determinar el orden de una serie de tiemp (es decir, si el proceso es AR(1), AR(2), etc...), era calculando la ACF y la PACF de la serie de tiempo. No obstante, existe una alternativa que es encontrar el orden lat que el criterio de AIC se maximice. 
+        Implemente una función tal que para un orden máximo dado, la función busque sobre todos los órdenes menores a este valor máximo y seleccione el orden con un criterio de AIC máximo.
+\item Implemente una función en Python que calcule la función de autocorrelación parcial para una serie de tiempo dada.
+\item Los datos adjuntos en la tarea corresponden al producto interno bruto trimestral de Estados Unidos desde 1947 hasta 1969.
+\item Investiguen en qué consiste la gráfica de Cuantil-Cuantil ó QQ-plot.
+        \begin{itemize}
+            \item Realice un análisis exploratorio de los datos. La serie de tiempo es estacionaria? Qué alternativas propone para "quitarle" la tendencia a la serie de tiempo?
+            \item Calcule la ACF y la PACF del proceso estacionario utilizando tanto las librerías de Python como sus funciones implementadas. ¿Qué pueden decir sobre los gráficos observados?
+            \item Ajuste un modelo, ya sea AR o MA utilizando las librerías de Python. Para determinar el órden de los modelos, utilice tanto el criterio de ACF y PACF como el criterio mencionado en la pregunta 3.
+            \item Haga un análisis de los resultados del modelo que eligieron. Es buen modelo? Qué pueden decir sobre la significancia de los parámetros del modelo?
+            \item Hagan un análisis de los residuales resultantes del modelo? Cómo se distribuyen? Qué dice la QQ-Plot al respecto?
+            \item A partir de su modelo, pueden realizar un pronóstico de la serie de tiempo utilizando la función "forecast" contenida en la paquetería "statsmodels" en Python. Investiguen el funcionamiento de dicha función y hagan un pronóstico de 5 trimestres adelante. Qué opinan de los resultados?
+        \end{itemize}
+\end{enumerate}
+\end{document}

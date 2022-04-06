@@ -1,0 +1,83 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage[width=18.00cm, height=27.00cm]{geometry}
+\title{Clase Estadística III}
+\begin{document}
+	\maketitle
+\section{Procesos ARMA}
+	En la clase, ya vimos los procesos fundamentales de series de tiempo, los cuales son los procesos AR y los procesos MA.
+	Comentamos que los procesos AR sirven para modelar la dependencia de las observaciones vistas el día de hoy con respecto a las observaciones pasadas, mientras que los procesos MA sirven para modelar la dependencia de los ruidos blancos con respecto a los ruidos blancos pasados. La pregunta obvia ahora sería ¿Qué pasa con las series de tiempo que cuentan con ambas características? (Observaciones dependientes del pasado así como Ruidos blancos dependientes del pasado).
+	\subsection{Procesos $ARMA(p,q)$}
+	El modelo $ARMA(p,q)$ se define la siguiente formaa:
+	\begin{equation} \label{eq:ARMA}
+		\phi_p(B)X_t = \theta_q(B)Z_t,
+	\end{equation}
+donde
+	\begin{eqnarray}
+		\phi_p(B)&=& 1-\phi_1 B -\phi_2 B^2-...-\phi_pB^p \\
+		\theta_q(B)&=& 1-\theta_1 B -\theta_2 B^2-...-\theta_qB^q 
+	\end{eqnarray}
+Podemos ver que este proceso puede escribirse como un proceso puramente autoregresivo de la siguiente forma:
+\begin{equation}
+	\pi(B) X_t = Z_t,
+\end{equation}
+donde
+\begin{equation}
+	\pi(B) = \frac{\theta_q(B)}{\phi_p(B)} = (1+\psi_1 B +\psi_2 B^2+...)
+\end{equation}
+
+\subsection{ACF del proceso $ARMA(p,q)$}
+Para derivar la función de autocovarianza, reescribimos (\ref{eq:ARMA}) de la siguiente forma:
+\begin{equation}
+	X_t = \phi_1 X_{t-1}+ \phi_2 X_{t-2} + ... + \phi_p X_{t-p}-Z_t-\theta_1 Z_{t-1} -\theta_2 Z_{t-2}-...-\theta_qZ_{t-q} 
+\end{equation}
+Multiplicamos por $X_{t-k}$ ambos lados:
+\begin{equation}
+	X_{t-k}X_t = \phi_1 X_{t-1}X_{t-k}+ \phi_2 X_{t-2}X_{t-k} + ... + \phi_p X_{t-p}X_{t-k}-Z_t-\theta_1 Z_{t-1}X_{t-k} -\theta_2 Z_{t-2}X_{t-k}-...-\theta_qZ_{t-q}X_{t-k} 
+\end{equation}
+Tomamos valor esperado por ambos lados de la ecuación y obtenemos lo siguiente:
+\begin{equation}
+	\gamma_k= \phi_1 \gamma_{k-1}+ \phi_2 \gamma_{k-2} + ... + \phi_p \gamma_{k-p}-E[Z_tX_{t-k}]-\theta_1 E[Z_{t-1}X_{t-k}] -\theta_2 E[Z_{t-2}X_{t-k}]-...-\theta_qE[Z_{t-q}X_{t-k}] 
+\end{equation}
+Dado que:
+\begin{equation}
+E[Z_{t-i}X_{t-k}] = 0 , \ \ \ \ k > i
+\end{equation}
+Tenemos que:
+\begin{equation}
+	\gamma_k= \phi_1 \gamma_{k-1}+ \phi_2 \gamma_{k-2} + ... + \phi_p \gamma_{k-p} , \ \ \ \ k \geq (q+1)
+\end{equation}
+y por consecuencia,
+\begin{equation}
+	\rho_k= \phi_1 \rho_{k-1}+ \phi_2 \rho_{k-2} + ... + \phi_p \rho_{k-p} , \ \ \ \ k \geq (q+1)
+\end{equation}
+
+\subsection{PACF de un proceso $ARMA(p,q)$}
+Dado que el proceso ARMA contiene un proceso MA; la PACF tendrá un comportamiento de decaimiento exponencial.
+
+\subsection{Ejercicios}
+\begin{itemize}
+	\item Encuentre la ACF y la PACF para $k = 1,2,3,4,5$ para los siguientes procesos, donde $Z_t$ es un ruido blanco gaussiano:
+	\begin{enumerate}
+		\item $X_t - 0.5 X_{t-1} = Z_t$
+		\item $X_t - 0.98 X_{t-1} = Z_t$
+		\item $X_t - 1.3 X_{t-1} + 0.4 X_{t-2} = Z_t$				
+	\end{enumerate}
+	\item Para los siguientes procesos AR(2), encuentre una expresión general para $\rho_k$:
+	\begin{itemize}
+		\item $X_t - 0.6 X_{t-1} + 0.3 X_{t-2} = Z_t$	
+		\item $X_t - 0.8 X_{t-1} + 0.5 X_{t-2} = Z_t$	
+	\end{itemize}
+\item  Encuentre el intervalo de valores para $\alpha$, tal que el proceso
+\begin{equation}
+	X_t = X_{t-1}+\alpha Z_{t-2} + Z_t
+\end{equation}
+es estacionario, además, encuentre la ACF del modelo cuando $\alpha = - \frac{1}{2}$.
+\end{itemize}
+	
+\end{document}
